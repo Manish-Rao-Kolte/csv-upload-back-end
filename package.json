@@ -8,11 +8,13 @@
     "start": "node src/index.js",
     "dev": " nodemon src/index.js",
     "css": " npx tailwindcss -i ./public/stylesheets/tailwind.css -o ./public/stylesheets/style.css --watch",
-    "all": " npm-run-all --parallel dev css"
+    "all": " npm-run-all --parallel css dev"
   },
   "author": "Manish Rao Kolte",
   "license": "ISC",
   "dependencies": {
+    "cloudinary": "^2.2.0",
+    "csv": "^6.3.9",
     "dotenv": "^16.4.5",
     "ejs": "^3.1.10",
     "express": "^4.19.2",
