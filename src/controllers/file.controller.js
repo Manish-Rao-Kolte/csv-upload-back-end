@@ -2,6 +2,7 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import { File } from "../models/file.model.js";
 import csv from "csv-parser";
 import fs from "fs";
+import { removeFromCloudinary } from "../utils/cloudinary.js";
 
 const renderCsvFilePage = asyncHandler(async (req, res) => {
     //fetch which file to show
@@ -9,6 +10,9 @@ const renderCsvFilePage = asyncHandler(async (req, res) => {
     //parse data using csv parser
     //show data on tableview page
     const { id, pageNumber } = req.params;
+    if (!Number(pageNumber)) {
+        return res.status(404).render("404_page", { url: req.originalUrl });
+    }
     if (!id) {
         console.log("File id is required!");
         return;
@@ -46,22 +50,24 @@ const renderCsvFilePage = asyncHandler(async (req, res) => {
                 const endRowNumber = startRowNumber + (slicedData.length - 1);
                 const totalRows = fileData.length;
                 const pageCount = Math.ceil(fileData.length / maxRowsPerPage);
+                const limit = pageNumber + 20;
                 if (
-                    pageNumber > pageCount ||
-                    pageNumber < pageCount ||
-                    !Number(pageNumber)
+                    Number(pageNumber) < 1 ||
+                    Number(pageNumber) > Number(pageCount)
                 ) {
-                    const url = req.originalUrl;
-                    return res.status(404).render("404_page", { url });
+                    return res
+                        .status(404)
+                        .render("404_page", { url: req.originalUrl });
                 }
                 return res.status(200).render("view_file", {
                     fileHeader,
                     fileData: slicedData,
-                    pageNumber,
+                    pageNumber: Number(pageNumber) || 1,
                     startRowNumber,
                     endRowNumber,
                     totalRows,
-                    pageCount,
+                    pageCount: Number(pageCount),
+                    limit,
                     id,
                     title: "File",
                 });
@@ -70,12 +76,34 @@ const renderCsvFilePage = asyncHandler(async (req, res) => {
     //   return res.status(200).render("pagination", { title: "Page" });
 });
 
+const removeCsvFile = asyncHandler(async (req, res) => {
+    //fetxh with file to delete from client
+    //fetch data from db
+    //get cloudinary url to remove from data
+    //remove file from cloudinary and DB
+    const { id } = req.params;
+    if (!id) {
+        return new Error("File id is required to remove!");
+    }
+    const file = await File.findByIdAndDelete(id);
+    if (!file) {
+        return new Error(
+            "File does not exist or Error in removing the file from DB!"
+        );
+    }
+    const result = await removeFromCloudinary(file.public_id);
+    if (result !== "ok") {
+        return new Error("Failed to remove file from Cloudinary!");
+    }
+    return res.status(200).redirect("back");
+});
+
 const getTableDataToShow = (fileData = [], pageNumber = 1) => {
-    const maxRowsPerPage = 30;
+    const maxRowsPerPage = 100;
     const startIndex = (pageNumber - 1) * maxRowsPerPage;
     const endIndex = startIndex + maxRowsPerPage;
     const slicedData = fileData.slice(startIndex, endIndex);
     return { slicedData, startIndex, maxRowsPerPage };
 };
 
-export { renderCsvFilePage };
+export { renderCsvFilePage, removeCsvFile };

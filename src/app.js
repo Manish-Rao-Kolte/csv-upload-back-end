@@ -31,8 +31,7 @@ import fileRouter from "./routes/api/v1/file.routes.js";
 app.use("/api/v1/", homeRouter);
 app.use("/api/v1/file/", fileRouter);
 app.use("*", (req, res) => {
-    const url = req.baseUrl;
-    return res.status(404).render("404_page", { url });
+    return res.status(404).render("404_page", { url: req.originalUrl });
 });
 
 export { app };

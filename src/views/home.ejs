@@ -1,26 +1,30 @@
 <%- include("navbar") %>
-<div class="mt-10 min-w-fit lg:min-w-[60vw]">
-  <div class="h-fit w-fit pb-4 box-border border-2 border-emerald-400 rounded shadow-c shadow-emerald-300 flex flex-col mx-auto items-center lg:min-w-[70%] backdrop-blur-sm">
-    <h3 class="font-semibold text-lg lg:text-xl border rounded rounded-b-none w-full py-2 bg-emerald-200 text-center">
+<div class="mt-4 md:mt-10 w-[90vw] md:w-[75vw] lg:w-[70vw] xl:w-[55vw]">
+  <div class="h-fit w-[100%] pb-4 box-border border-2 border-emerald-400 rounded shadow-c shadow-emerald-300 flex flex-col mx-auto gap-y-2 items-center backdrop-blur-sm">
+    <h3 class="font-semibold text-lg md:text-lg lg:text-2xl border rounded rounded-b-none w-[100%] py-2 bg-emerald-200 text-center">
       Upload CSV File
     </h3>
-    <div class="px-14 mt-6 lg:min-w-[80%]">
-      <form action="upload" method="post" enctype="multipart/form-data" class="flex flex-col items-center gap-y-3 lg:min-w-[100%]">
-        <input type="file" name="files" id="files" accept=".csv"  multiple required class="border border-slate-700 rounded lg:min-w-[100%]">
+    <div class="px-14 mt-6 w-[80%] md:w-[60%] leading-6 md:leading-9 text-sm md:text-base xl:text-lg">
+      <form action="upload" method="post" enctype="multipart/form-data" class="flex flex-col items-center gap-y-3 md:gap-y-6 md:min-w-[100%]">
+        <input type="file" name="files" id="files" accept=".csv"  multiple required class="border border-slate-700 rounded md:min-w-[100%]">
         <button type="submit" class="inline-flex items-center rounded-md bg-green-100 px-4 py-1 text-base font-medium text-green-900 ring-1 ring-inset ring-green-600/20 hover:bg-green-200">Upload</button>
       </form>
     </div>
   </div>
-  <div class="min-w-[100%] min-h-fit flex flex-col items-center mt-4 px-4 py-3">
-    <ul class="flex flex-col items-center gap-y-3 min-w-[80%]">
+  <div class="w-[80%] md:w-[100%] min-h-fit flex flex-col items-center mt-4 px-4 py-3 mx-auto">
+    <ul class="flex flex-col items-center gap-y-3 w-[100%] md:w-[80%]">
       <% for (file of filesList) { %>
-        <a href="/api/v1/file/view/<%=file._id%>/1" class="flex items-center justify-center min-w-[60%] backdrop-blur-sm rounded-md border-2 border-indigo-300 text-center py-2 px-1 hover:backdrop-blur-lg hover:cursor-pointer
-          hover:inline-flex hover:ring-2 ring-emerald-300 ring-inset">
-          <li>
-          <%= file.originalname %>
-          </li>
-        </a>
-        <% } %>
+        <li class="w-[100%] md:w-[80%] lg:-w-[70%] min-h-fit flex justify-center items-center text-center py-1 md:py-2 px-1 backdrop-blur-sm rounded-md border-2 border-indigo-300 hover:backdrop-blur-lg hover:cursor-pointer hover:inline-flex hover:ring-2 ring-emerald-300 ring-inset">
+          <a href="/api/v1/file/view/<%=file._id%>/1" class="items-center w-[80%] text-center truncate"> 
+            <%= file.originalname %>
+          </a>
+          <a href="/api/v1/file/remove/<%=file._id%>" class="absolute flex items-center right-2 rounded-full hover:inline-flex hover:bg-indigo-100 hover:ring ring-indigo-200 ring-inset p-1">
+            <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="28" height="28" viewBox="0 0 64 64">
+              <ellipse cx="32" cy="61" opacity=".3" rx="19" ry="3"></ellipse><path fill="#9c34c2" d="M43.299,55H20.701c-1.535,0-2.823-1.159-2.984-2.686L14,17h36l-3.717,35.314	C46.122,53.841,44.834,55,43.299,55z"></path><path fill="#ffa1ac" d="M50,22H14c-1.657,0-3-1.343-3-3v-2c0-1.657,1.343-3,3-3h36c1.657,0,3,1.343,3,3v2	C53,20.657,51.657,22,50,22z"></path><path d="M43.965,26.469l-2.248,21.757C41.602,49.237,40.746,50,39.729,50H33c-2.762,0-4.997,2.239-4.997,5	h15.296c1.535,0,2.823-1.159,2.984-2.686l3.152-30.249C46.712,21.784,44.274,23.747,43.965,26.469z" opacity=".15"></path><path fill="#fff" d="M21.111,37.65l-1.585-16.205c-0.004-0.04-0.009-0.08-0.015-0.119	C19.346,20.102,20.244,19,21.48,19h9.385c2.762,0,4.997-2.239,4.997-5H14c-1.657,0-3,1.343-3,3v2c0,1.657,1.343,3,3,3h0.558	l2.139,21.174C19.441,42.868,21.418,40.395,21.111,37.65z" opacity=".3"></path><line x1="17.5" x2="23.5" y1="17.5" y2="17.5" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="3"></line><path fill="#9c34c2" d="M39,14H25v-2c0-1.657,1.343-3,3-3h8c1.657,0,3,1.343,3,3V14z"></path>
+            </svg>
+          </a>
+        </li>
+      <% } %>
     </ul>
   </div> 
 </div>

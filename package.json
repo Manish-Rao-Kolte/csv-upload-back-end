@@ -14,7 +14,6 @@
   "license": "ISC",
   "dependencies": {
     "cloudinary": "^2.2.0",
-    "csv": "^6.3.9",
     "csv-parser": "^3.0.0",
     "dotenv": "^16.4.5",
     "ejs": "^3.1.10",
