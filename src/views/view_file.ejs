@@ -1,0 +1,25 @@
+<%- include("navbar") %>
+<div class="max-w-[90vw] max-h-[80vh] md:max-h-[70vh] overflow-auto mt-6 lg:mt-16 ">
+    <table class="border-separate border border-slate-500 min-w-[70vw] max-w-[85vw] max-h-[100vh] overflow-x-auto bg-transparent backdrop-blur-sm text-sm mb-1">
+        <thead class="bg-slate-800 text-white font-normal">
+            <tr>
+            <% for(header of fileHeader) { %>
+                <th scope="col" class="border border-slate-400 px-2 py-1 text-wrap text-sm md:text-base"> <%=header %> </th>
+            <% } %>
+            </tr>
+        </thead>
+        <tbody>
+            <% for(file of fileData){ %>
+                <tr class="text-center max-h-fit break-all">
+                    <% for(header of fileHeader){ %>
+                        <td class="border border-slate-400 px-2 py-1 text-wrap text-xs md:text-sm break-all">
+                            <%= file[header] %>
+                        </td>
+                    <% } %>
+                </tr>
+            <% } %>   
+        </tbody>
+    </table>
+</div>
+<%- include("pagination") %>
+

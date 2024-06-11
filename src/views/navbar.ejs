@@ -1,12 +1,27 @@
-<nav class="h-14 min-w-full bg-indigo-300 flex justify-between items-center">
-    <div class="w-[50%] px-16">
-        <div class="font-bold text-xl">
-            Logo
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> <%= title %> </title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link type="text/css" href="/stylesheets/style.css" rel="stylesheet">
+</head>
+<body class="h-full w-full bg-zinc-100 flex flex-col items-center font-poppins bg-[url('/images/bg_image_1.jpg')] bg-cover">
+    <nav class="min-w-full bg-indigo-300 flex justify-between items-center shadow-d py-1">
+        <div class="w-[50%] px-6 lg:px-24">
+            <div class="font-bold text-xl inline-flex items-center rounded-full bg-green-50 px-1.5 py-1 text-green-700 ring-1 ring-inset ring-green-600/20">
+                <a href="/api/v1/">
+                    <img src="/images/brand_logo.png" alt="Home" class="h-10 i">
+                </a>
+            </div>
         </div>
-    </div>
-    <div class="w-[50%] px-10 flex flex-row-reverse">
-        <div class="font-bold text-xl">
-            Profile
+        <div class="w-[50%] px-6 lg:px-16 flex flex-row-reverse">
+            <div class="font-bold text-xl inline-flex items-center rounded-full bg-pink-50 px-1.5 py-1 text-pink-700 ring-1 ring-inset ring-pink-700/10">
+                <img src="/images/user_icon.png" alt="Home" class="h-10 hover:cursor-pointer">
+            </div>
         </div>
-    </div>
-</nav>
+    </nav>
+</body>
+</html>
