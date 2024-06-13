@@ -1,14 +1,35 @@
 <%- include("navbar") %>
-<div class="max-w-[90vw] max-h-[80vh] md:max-h-[70vh] overflow-auto mt-6 lg:mt-16 ">
+<form id="searchForm" class="w-[60%] max-h-fit md:w-[50%] lg:w-[40%] xl:w-[30%] 2xl:w-[20%] mx-auto flex flex-col mt-4 lg:mt-10 py-2 px-2 gap-y-2">
+    <div class="flex gap-x-2 items-center">
+        <label for="column" class="font-semibold text-lg truncate">Select Header :</label>
+        <select name="column" id="column" class="rounded-lg border-slate-800 px-3 pr-10 md:px-5 md:pr-12 lg:px-7 lg:pr-14 py-1 bg-transparent focus:shadow-none focus:border-transparent focus:outline-1 focus:outline-slate-800 focus:outline-offset-0 text-sm md:text-base" required>
+            <option value="selct" disabled selected>select</option>
+            <% for(header of fileHeader){ %>
+                <option value="<%= header %>"> <%= header %> </option>
+            <% } %>
+        </select>
+    </div>
+    <div class="relative">
+        <input type="text" name="searchText" id="searchText" class="rounded-lg border-slate-800 px-3 pr-10 md:px-5 md:pr-12 lg:px-7 lg:pr-14 py-1 bg-transparent w-[100%] h-[100%] focus:shadow-none focus:border-transparent focus:outline-1 focus:outline-slate-800 focus:outline-offset-0 text-sm md:text-base" placeholder="type to search..">
+        <input type="text" name="searchFile" id="searchFile" value="<%= JSON.stringify(fileData)%>" hidden>
+        <input type="text" name="headerFile" id="headerFile" value="<%= JSON.stringify(fileHeader)%>" hidden>
+        <button type="submit" class="absolute border-none right-1.5 lg:right-3 border-l-0 rounded-r-lg border-slate-800 px-2 py-1">
+            <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="27" height="27" viewBox="0 0 64 64">
+            <path fill="#da7200" d="M14,55c-1.28,0-2.559-0.488-3.536-1.465c-1.953-1.952-1.953-5.118,0-7.07l18-18 c1.953-1.953,5.118-1.953,7.071,0c1.953,1.952,1.953,5.118,0,7.07l-18,18C16.559,54.512,15.28,55,14,55z"></path><ellipse cx="32" cy="61" opacity=".3" rx="19" ry="3"></ellipse><circle cx="35.5" cy="27.5" r="21.5" fill="#a7b3c7"></circle><circle cx="35.5" cy="27.5" r="14.5" fill="#4ccff1"></circle><path fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="3" d="M23.825,21.903c0.583-1.375,1.426-2.615,2.467-3.656s2.281-1.884,3.656-2.467"></path><path d="M56.407,22.56C53.929,22.856,52,24.941,52,27.5C52,36.598,44.598,44,35.5,44 c-2.841,0-5.655-0.747-8.139-2.161c-1.957-1.113-4.417-0.783-6.01,0.81L14,50c-1.305,1.305-1.717,3.148-1.277,4.813 C13.142,54.924,13.569,55,14,55c1.28,0,2.559-0.488,3.536-1.465l7.352-7.352C28.021,47.967,31.637,49,35.5,49 C47.374,49,57,39.374,57,27.5C57,25.797,56.781,24.148,56.407,22.56z" opacity=".15"></path><path fill="#fff" d="M14.579,32.442C17.064,32.151,19,30.063,19,27.5C19,18.402,26.402,11,35.5,11 c2.558,0,4.644-1.928,4.94-4.407C38.852,6.219,37.203,6,35.5,6C23.626,6,14,15.626,14,27.5C14,29.202,14.204,30.855,14.579,32.442z" opacity=".3"></path>
+            </svg>
+        </button>
+    </div>
+</form>
+<div class="max-w-[90vw] max-h-[80vh] md:max-h-[70vh] overflow-auto mt-3 lg:mt-6 ">
     <table class="border-separate border border-slate-500 min-w-[70vw] max-w-[85vw] max-h-[100vh] overflow-x-auto bg-transparent backdrop-blur-sm text-sm mb-1">
-        <thead class="bg-slate-800 text-white font-normal">
+        <thead class="bg-slate-800 text-white font-normal sticky top-0 ">
             <tr>
             <% for(header of fileHeader) { %>
-                <th scope="col" class="border border-slate-400 px-2 py-1 text-wrap text-sm md:text-base"> <%=header %> </th>
+                <th scope="col" class="border border-slate-400 p-2 text-wrap text-sm md:text-base hover:cursor-pointer"> <%=header %> </th>
             <% } %>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="tableBody">
             <% for(file of fileData){ %>
                 <tr class="text-center max-h-fit break-all">
                     <% for(header of fileHeader){ %>
@@ -22,4 +43,111 @@
     </table>
 </div>
 <%- include("pagination") %>
+<%- include("chart_page") %>
 
+<script type="text/javascript">
+    const searchFormEl = document.getElementById("searchForm");
+    const tableBodyEl = document.getElementById("tableBody");
+    const columnEl = document.getElementById("column");
+    const searchTextEl = document.getElementById("searchText");
+    const closeBtnEl = document.getElementById('close-button');
+    const chartContainer = document.getElementById('piechart_3d').parentElement.parentElement; 
+    let column;
+
+    // Function to create table rows 
+    function createTableRow(file, headerFile) {
+        const rowElement = document.createElement("tr");
+        rowElement.classList.add("text-center", "max-h-fit", "break-all");
+
+        headerFile.forEach(header => {
+            const dataElement = document.createElement("td");
+            dataElement.classList.add("border", "border-slate-400", "px-2", "py-1", "text-wrap", "text-xs", "md:text-sm", "break-all");
+            dataElement.textContent = file[header];
+            rowElement.appendChild(dataElement);
+        });
+
+        return rowElement;
+    }
+
+    // Event listener for search form submission
+    searchFormEl.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const column = e.target[0].value;
+        const searchText = e.target[1].value.toLowerCase();
+        const searchFile = JSON.parse(e.target[2].value);
+        const headerFile = JSON.parse(e.target[3].value);
+        tableBodyEl.innerHTML = ''; // Clear table body
+
+        const rowsFragment = document.createDocumentFragment();
+        if (searchText === "") {
+            searchFile.forEach(file => {
+                rowsFragment.appendChild(createTableRow(file, headerFile));
+            });
+        } else {
+            searchFile.forEach(file => {
+                if (file[column].toLowerCase() === searchText) {
+                    rowsFragment.appendChild(createTableRow(file, headerFile));
+                }
+            });
+        }
+        tableBodyEl.appendChild(rowsFragment); // Append all rows at once
+
+        searchTextEl.value = "";
+        columnEl.selectedIndex = 0;
+    });
+
+    // Event listeners for column headers
+    const tableHeaders = document.querySelectorAll('th'); 
+    tableHeaders.forEach(header => {
+        header.addEventListener('click', function() {
+            column = this.textContent.trim();
+            const columnIndex = Array.from(this.parentNode.children).indexOf(this);
+            const columnData = extractColumnData(columnIndex);
+            drawChart(columnData);
+        });
+    });
+
+    // Function to extract column data
+    function extractColumnData(columnIndex) {
+        const rows = tableBodyEl.querySelectorAll('tr');
+        return Array.from(rows).map(row => {
+            const cells = row.querySelectorAll('td');
+            return cells[columnIndex] ? cells[columnIndex].textContent : '';
+        });
+    }
+
+    // Event listener for close button
+    closeBtnEl.addEventListener('click', () => { 
+        chartContainer.classList.add("hidden"); 
+        closeBtnEl.classList.add("hidden"); 
+    });
+    
+
+    // Load Google Charts and draw the chart
+    google.charts.load("current", {packages:["corechart"]});
+
+    function drawChart(columnData) {
+        const valueCounts = {};
+        columnData.forEach(value => valueCounts[value] = (valueCounts[value] || 0) + 1); // Count frequencies
+
+        const chartData = google.visualization.arrayToDataTable([
+            ['Value', 'Frequency'],
+            ...Object.entries(valueCounts)
+        ]);
+
+        const options = {
+            title: column || 'Chart data',
+            titleTextStyle: { fontSize: 20, color: "#3e3d3d"  },
+            is3D: true,
+            height: 400,
+            width: 500,
+            backgroundColor: 'transparent',
+            chartArea: {top:'10%', left:'10%', width: '80%', height: '80%' },
+        };
+
+        const chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
+        chart.draw(chartData, options)
+        chartContainer.classList.remove("hidden");
+        closeBtnEl.classList.remove("hidden");
+    }
+</script>

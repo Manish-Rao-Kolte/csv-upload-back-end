@@ -1,15 +1,15 @@
-<div class="max-w-[70vw]">
+<div class="max-w-[70vw] hidden 2xl:block">
     <% if(pageNumber !== 1) { %>
         <a href="/api/v1/file/view/<%=id%>/1" class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-200 focus:z-20 focus:outline-offset-0">1</a>
         <% if(pageNumber !== 2) { %>
             <a href="#" class="relative pointer-events-none inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-200 focus:z-20 focus:outline-offset-0">...</a>
         <% } %>
     <% } %>
-    <% if(pageNumber <= (pageCount - 21)) { %>
+    <% if(pageNumber <= (pageCount - 17)) { %>
         <% for(let i= pageNumber; i< pageCount; i++) { %>
             <% if(i === pageNumber) { %>
                 <a href="/api/v1/file/view/<%=id%>/<%=i%>" aria-current="page" class="relative z-10 inline-flex items-center bg-indigo-600 px-4 py-2 text-sm font-semibold text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"><%= i %></a>
-            <% } else if(i >= pageNumber+19) { %>
+            <% } else if(i >= pageNumber+15) { %>
                 <a href="#" class="relative pointer-events-none inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-200 focus:z-20 focus:outline-offset-0">...</a>
                 <a href="/api/v1/file/view/<%=id%>/<%=pageCount%>" class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-200 focus:z-20 focus:outline-offset-0"><%= pageCount %></a>
             <% break; } else { %>
@@ -17,8 +17,98 @@
             <% } %>
         <% } %>
     <% } %>
-    <% if(pageNumber > 30 &&  (pageNumber === pageCount || pageNumber >= (pageCount - 20))) { %>
-        <% for(let i= (pageCount-20); i<= pageCount; i++) { %>
+    <% if(pageNumber > 25 &&  (pageNumber === pageCount || pageNumber >= (pageCount - 16))) { %>
+        <% for(let i= (pageCount-16); i<= pageCount; i++) { %>
+            <% if(i === pageNumber) { %>
+                <a href="/api/v1/file/view/<%=id%>/<%=i%>" aria-current="page" class="relative z-10 inline-flex items-center bg-indigo-600 px-4 py-2 text-sm font-semibold text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"><%= i %></a>
+            <% } else { %>
+                <a href="/api/v1/file/view/<%=id%>/<%=i%>" class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-200 focus:z-20 focus:outline-offset-0"><%= i %></a>
+            <% } %>
+        <% } %>
+    <% } %>
+</div>
+
+<div class="max-w-[70vw] hidden xl:block 2xl:hidden">
+    <% if(pageNumber !== 1) { %>
+        <a href="/api/v1/file/view/<%=id%>/1" class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-200 focus:z-20 focus:outline-offset-0">1</a>
+        <% if(pageNumber !== 2) { %>
+            <a href="#" class="relative pointer-events-none inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-200 focus:z-20 focus:outline-offset-0">...</a>
+        <% } %>
+    <% } %>
+    <% if(pageNumber <= (pageCount - 13)) { %>
+        <% for(let i= pageNumber; i< pageCount; i++) { %>
+            <% if(i === pageNumber) { %>
+                <a href="/api/v1/file/view/<%=id%>/<%=i%>" aria-current="page" class="relative z-10 inline-flex items-center bg-indigo-600 px-4 py-2 text-sm font-semibold text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"><%= i %></a>
+            <% } else if(i >= pageNumber+11) { %>
+                <a href="#" class="relative pointer-events-none inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-200 focus:z-20 focus:outline-offset-0">...</a>
+                <a href="/api/v1/file/view/<%=id%>/<%=pageCount%>" class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-200 focus:z-20 focus:outline-offset-0"><%= pageCount %></a>
+            <% break; } else { %>
+                <a href="/api/v1/file/view/<%=id%>/<%=i%>" class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-200 focus:z-20 focus:outline-offset-0"><%= i %></a>
+            <% } %>
+        <% } %>
+    <% } %>
+    <% if(pageNumber > 20 &&  (pageNumber === pageCount || pageNumber >= (pageCount - 12))) { %>
+        <% for(let i= (pageCount-12); i<= pageCount; i++) { %>
+            <% if(i === pageNumber) { %>
+                <a href="/api/v1/file/view/<%=id%>/<%=i%>" aria-current="page" class="relative z-10 inline-flex items-center bg-indigo-600 px-4 py-2 text-sm font-semibold text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"><%= i %></a>
+            <% } else { %>
+                <a href="/api/v1/file/view/<%=id%>/<%=i%>" class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-200 focus:z-20 focus:outline-offset-0"><%= i %></a>
+            <% } %>
+        <% } %>
+    <% } %>
+</div>
+
+<div class="max-w-[70vw] hidden md:block xl:hidden">
+    <% if(pageNumber !== 1) { %>
+        <a href="/api/v1/file/view/<%=id%>/1" class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-200 focus:z-20 focus:outline-offset-0">1</a>
+        <% if(pageNumber !== 2) { %>
+            <a href="#" class="relative pointer-events-none inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-200 focus:z-20 focus:outline-offset-0">...</a>
+        <% } %>
+    <% } %>
+    <% if(pageNumber <= (pageCount - 9)) { %>
+        <% for(let i= pageNumber; i< pageCount; i++) { %>
+            <% if(i === pageNumber) { %>
+                <a href="/api/v1/file/view/<%=id%>/<%=i%>" aria-current="page" class="relative z-10 inline-flex items-center bg-indigo-600 px-4 py-2 text-sm font-semibold text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"><%= i %></a>
+            <% } else if(i >= pageNumber+7) { %>
+                <a href="#" class="relative pointer-events-none inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-200 focus:z-20 focus:outline-offset-0">...</a>
+                <a href="/api/v1/file/view/<%=id%>/<%=pageCount%>" class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-200 focus:z-20 focus:outline-offset-0"><%= pageCount %></a>
+            <% break; } else { %>
+                <a href="/api/v1/file/view/<%=id%>/<%=i%>" class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-200 focus:z-20 focus:outline-offset-0"><%= i %></a>
+            <% } %>
+        <% } %>
+    <% } %>
+    <% if(pageNumber > 7 &&  (pageNumber === pageCount || pageNumber >= (pageCount - 8))) { %>
+        <% for(let i= (pageCount-8); i<= pageCount; i++) { %>
+            <% if(i === pageNumber) { %>
+                <a href="/api/v1/file/view/<%=id%>/<%=i%>" aria-current="page" class="relative z-10 inline-flex items-center bg-indigo-600 px-4 py-2 text-sm font-semibold text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"><%= i %></a>
+            <% } else { %>
+                <a href="/api/v1/file/view/<%=id%>/<%=i%>" class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-200 focus:z-20 focus:outline-offset-0"><%= i %></a>
+            <% } %>
+        <% } %>
+    <% } %>
+</div>
+
+<div class="max-w-[70vw] hidden sm:block md:hidden">
+    <% if(pageNumber !== 1) { %>
+        <a href="/api/v1/file/view/<%=id%>/1" class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-200 focus:z-20 focus:outline-offset-0">1</a>
+        <% if(pageNumber !== 2) { %>
+            <a href="#" class="relative pointer-events-none inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-200 focus:z-20 focus:outline-offset-0">...</a>
+        <% } %>
+    <% } %>
+    <% if(pageNumber <= (pageCount - 6)) { %>
+        <% for(let i= pageNumber; i< pageCount; i++) { %>
+            <% if(i === pageNumber) { %>
+                <a href="/api/v1/file/view/<%=id%>/<%=i%>" aria-current="page" class="relative z-10 inline-flex items-center bg-indigo-600 px-4 py-2 text-sm font-semibold text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"><%= i %></a>
+            <% } else if(i >= pageNumber+5) { %>
+                <a href="#" class="relative pointer-events-none inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-200 focus:z-20 focus:outline-offset-0">...</a>
+                <a href="/api/v1/file/view/<%=id%>/<%=pageCount%>" class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-200 focus:z-20 focus:outline-offset-0"><%= pageCount %></a>
+            <% break; } else { %>
+                <a href="/api/v1/file/view/<%=id%>/<%=i%>" class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-200 focus:z-20 focus:outline-offset-0"><%= i %></a>
+            <% } %>
+        <% } %>
+    <% } %>
+    <% if(pageNumber > 3 &&  (pageNumber === pageCount || pageNumber >= (pageCount - 4))) { %>
+        <% for(let i= (pageCount-4); i<= pageCount; i++) { %>
             <% if(i === pageNumber) { %>
                 <a href="/api/v1/file/view/<%=id%>/<%=i%>" aria-current="page" class="relative z-10 inline-flex items-center bg-indigo-600 px-4 py-2 text-sm font-semibold text-white focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"><%= i %></a>
             <% } else { %>
