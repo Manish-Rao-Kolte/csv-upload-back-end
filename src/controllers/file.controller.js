@@ -27,10 +27,9 @@ const renderCsvFilePage = asyncHandler(async (req, res) => {
         },
     });
     const data = await response.text();
-    const filePath = `.public/temp/downloads/data.csv`;
+    const filePath = `.public/temp/downloads/${file.originalname}`;
     fs.writeFile(filePath, data, function (err) {
         if (err) {
-            console.log("this error working");
             return console.log("Error", err);
         }
         const fileData = [];
@@ -38,13 +37,11 @@ const renderCsvFilePage = asyncHandler(async (req, res) => {
         fs.createReadStream(filePath)
             .pipe(csv())
             .on("headers", (headers) => {
-                console.log(headers);
                 headers.map((head) => {
                     fileHeader.push(head);
                 });
             })
             .on("data", (data) => {
-                console.log(data);
                 fileData.push(data);
             })
             .on("end", () => {
