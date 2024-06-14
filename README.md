@@ -1,4 +1,4 @@
-# Placement-Cell
+# CSV-UPLOADER-READER
 
 A project which helps user to upload csv data to database and render the list of uploaded file on home page. Once a file is clicked it shows the data in table format to user. Also the column data can be searched and viewed as chart.
 
