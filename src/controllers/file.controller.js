@@ -27,7 +27,7 @@ const renderCsvFilePage = asyncHandler(async (req, res) => {
         },
     });
     const data = await response.text();
-    const filePath = `.public/temp/downloads/data.csv`;
+    const filePath = `public/temp/downloads/data.csv`;
     fs.writeFile(filePath, data, function (err) {
         if (err) {
             return console.log("Error", err);
