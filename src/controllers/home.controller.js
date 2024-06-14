@@ -3,6 +3,7 @@ import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import { File } from "../models/file.model.js";
 import fs from "fs";
 
+//controller to render home page.
 const renderHome = asyncHandler(async (req, res) => {
     //fetch csv files list from databse.
     //show data in list on home page
@@ -17,6 +18,7 @@ const renderHome = asyncHandler(async (req, res) => {
     });
 });
 
+//controller for upload endpoint.
 const storeCsvFiles = asyncHandler(async (req, res) => {
     //get data from client
     //check for data validation
@@ -28,6 +30,7 @@ const storeCsvFiles = asyncHandler(async (req, res) => {
         if (!path || !originalname) {
             throw new Error("No file path or Name exist!");
         }
+        //apply check to validate that file type is csv.
         if (mimetype !== "text/csv") {
             //deleting file from temp to clear storage and to protect code.
             fs.unlinkSync(path);
@@ -36,7 +39,7 @@ const storeCsvFiles = asyncHandler(async (req, res) => {
         //upload data on cloudinary to use third party service and to make code base scalable to be able to store large data like videos etc.
         const instance = await uploadOnCloudinary(path);
         if (!instance || instance?.name === "Error") {
-            fs.unlinkSync(path); //deleting file from temp to clear storage and to protect code.
+            fs.unlinkSync(path); //deleting file from temp to clear storage.
             console.log(`Error: ${instance.message}`);
             return res.status(400).redirect("back");
         }

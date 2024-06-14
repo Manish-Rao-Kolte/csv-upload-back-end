@@ -7,6 +7,7 @@ cloudinary.config({
     api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
+//utility function to upload file on cloudinary storage.
 const uploadOnCloudinary = async (filePath) => {
     try {
         if (!filePath) {
@@ -23,6 +24,7 @@ const uploadOnCloudinary = async (filePath) => {
     }
 };
 
+//utility function to remove file from cloudinary storage.
 const removeFromCloudinary = async (id) => {
     try {
         const res = await cloudinary.uploader.destroy(id, {

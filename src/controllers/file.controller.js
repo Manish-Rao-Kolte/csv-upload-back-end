@@ -4,6 +4,7 @@ import csv from "csv-parser";
 import fs from "fs";
 import { removeFromCloudinary } from "../utils/cloudinary.js";
 
+//controller to render csv data in for of table.
 const renderCsvFilePage = asyncHandler(async (req, res) => {
     //fetch which file to show
     //fetch csv file from cloudinary url
@@ -78,6 +79,7 @@ const renderCsvFilePage = asyncHandler(async (req, res) => {
     //   return res.status(200).render("pagination", { title: "Page" });
 });
 
+//controller for remove file endpoint.
 const removeCsvFile = asyncHandler(async (req, res) => {
     //fetxh with file to delete from client
     //fetch data from db

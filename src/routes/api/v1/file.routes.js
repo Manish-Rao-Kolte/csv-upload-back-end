@@ -6,6 +6,7 @@ import {
 
 const fileRouter = Router();
 
+//routes declaration
 fileRouter.get("/view/:id/:pageNumber", renderCsvFilePage);
 fileRouter.get("/remove/:id", removeCsvFile);
 
